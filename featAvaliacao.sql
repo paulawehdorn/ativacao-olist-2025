@@ -14,11 +14,12 @@ tb_dtref_vendedor AS (
 tb_feat_avaliacao AS (
   SELECT dtref, idVendedor, 
          AVG(ap.vlNota) AS mediaAvaliacao,
-         COUNT(ap.vlNota) AS qtdReviewsAteHoje
+         COUNT(ap.vlNota) AS qtdReviewsAteHoje,
+         (COUNT(CASE WHEN dtv.idAvaliacao IS NULL THEN 1 END) * 1.0 / COUNT(dtv.idPedido)) * 100 AS pctPedidosNaoAvaliados -- pctPedidosNaoAvaliados = (qtd pedidos nao avaliados / qtd total de pedidos) * 100
   FROM tb_dtref_vendedor AS dtv
   LEFT JOIN silver.olist.avaliacao_pedido AS ap ON dtv.idAvaliacao = ap.idAvaliacao
   GROUP BY dtref, idVendedor
-  ORDER BY mediaAvaliacao DESC
+  ORDER BY pctPedidosNaoAvaliados DESC
 )
 
 SELECT *
