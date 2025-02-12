@@ -24,3 +24,4 @@ tb_feat_avaliacao AS (
 
 SELECT *
 FROM tb_feat_avaliacao
+
