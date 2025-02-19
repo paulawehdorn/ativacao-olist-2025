@@ -1,20 +1,23 @@
 -- Databricks notebook source
-WITH
-
-tb_base AS (
+WITH tb_base AS (
   SELECT  v.idVendedor,
           ip.idPedido,
           p.dtPedido,
           pp.descTipoPagamento,
           pp.nrParcelas,
           SUM(ip.vlPreco) AS vlReceita
+
   FROM    silver.olist.vendedor as v
-          LEFT JOIN silver.olist.item_pedido AS ip
-            ON v.idVendedor = ip.idVendedor
-          LEFT JOIN silver.olist.pedido AS p
-            ON ip.idPedido = p.idPedido
-          LEFT JOIN silver.olist.pagamento_pedido AS pp
-            ON ip.idPedido = pp.idPedido
+
+  LEFT JOIN silver.olist.item_pedido AS ip
+  ON v.idVendedor = ip.idVendedor
+
+  LEFT JOIN silver.olist.pedido AS p
+  ON ip.idPedido = p.idPedido
+
+  LEFT JOIN silver.olist.pagamento_pedido AS pp
+  ON ip.idPedido = pp.idPedido
+
   WHERE   p.dtPedido < '2017-06-01'
   GROUP BY ALL
 ),
