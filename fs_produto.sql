@@ -1,5 +1,8 @@
 -- Databricks notebook source
--- Tabela com todos os campos base que vamos precisar, de forma não agrupada
+DROP TABLE IF EXISTS sandbox.asn.fs_seller_produto_t5;
+
+CREATE TABLE IF NOT EXISTS sandbox.asn.fs_seller_produto_t5
+
 WITH tb_base AS (
   SELECT 
     --Campos básicos

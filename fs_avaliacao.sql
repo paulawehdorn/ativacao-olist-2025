@@ -1,4 +1,8 @@
 -- Databricks notebook source
+DROP TABLE IF EXISTS sandbox.asn.fs_seller_avaliacao_t5;
+
+CREATE TABLE IF NOT EXISTS sandbox.asn.fs_seller_avaliacao_t5
+
 WITH tb_base AS (
   SELECT v.idVendedor,
          ip.idPedido,

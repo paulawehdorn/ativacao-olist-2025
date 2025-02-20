@@ -1,4 +1,8 @@
 -- Databricks notebook source
+DROP TABLE IF EXISTS sandbox.asn.fs_seller_pagamento_t5;
+
+CREATE TABLE IF NOT EXISTS sandbox.asn.fs_seller_pagamento_t5
+
 WITH tb_base AS (
   SELECT  v.idVendedor,
           ip.idPedido,
@@ -30,7 +34,6 @@ tb_feat_pagamento AS (
           SUM(CASE WHEN descTipoPagamento = 'credit_card' THEN vlReceita ELSE 0 END) AS gmvCredito,
           SUM(CASE WHEN descTipoPagamento = 'debit_card' THEN vlReceita ELSE 0 END) AS gmvDebito,
           SUM(CASE WHEN descTipoPagamento = 'voucher' THEN vlReceita ELSE 0 END) AS gmvVoucher,
-          SUM(CASE WHEN descTipoPagamento = 'not_defined' THEN vlReceita ELSE 0 END) AS gmvNaoDefinido,
           -- % pedidos por tipo de pagamento
           SUM(CASE WHEN descTipoPagamento = 'boleto' THEN 1 ELSE 0 END) 
             / COUNT(DISTINCT idPedido) AS pctPedidosBoleto,
@@ -40,8 +43,6 @@ tb_feat_pagamento AS (
             / COUNT(DISTINCT idPedido) AS pctPedidosDebito,
           SUM(CASE WHEN descTipoPagamento = 'voucher' THEN 1 ELSE 0 END) 
             / COUNT(DISTINCT idPedido) AS pctPedidosVoucher,
-          SUM(CASE WHEN descTipoPagamento = 'not_defined' THEN 1 ELSE 0 END) 
-            / COUNT(DISTINCT idPedido) AS pctPedidosNaoDefinido,
           -- Média da quantidade de parcelas (excluindo à vista)
           AVG(CASE WHEN nrParcelas > 1 THEN nrParcelas END) AS mediaQtdeParcelas
   FROM tb_base
