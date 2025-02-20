@@ -1,4 +1,8 @@
 -- Databricks notebook source
+DROP TABLE IF EXISTS sandbox.asn.fs_seller_t5;
+
+CREATE TABLE IF NOT EXISTS sandbox.asn.fs_seller_t5
+
 with params as (
   select
     '2017-06-01' as dt_ref
