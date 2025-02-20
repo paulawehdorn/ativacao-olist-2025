@@ -1,4 +1,8 @@
 -- Databricks notebook source
+DROP TABLE IF EXISTS sandbox.asn.fs_seller_cliente_t5;
+
+CREATE TABLE IF NOT EXISTS sandbox.asn.fs_seller_cliente_t5
+
 WITH transacoes AS (
     SELECT  
         v.idVendedor AS vendedor, 
@@ -47,8 +51,8 @@ classificacao AS (
 
 SELECT 
     distinct 
-    '2017-06-01' AS referencia, 
-    c.vendedor,
+    '2017-06-01' AS dtRef, 
+    c.vendedor AS idVendedor,
 
     count(distinct c.cliente) AS qtdCliente,
     count(distinct CASE WHEN c.categoriaCliente = 'Cliente Novo' THEN c.cliente END ) / count(distinct c.cliente) AS cliNovo,
