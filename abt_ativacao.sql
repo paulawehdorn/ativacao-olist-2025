@@ -1,4 +1,6 @@
 -- Databricks notebook source
+CREATE TABLE sandbox.asn.abt_t5
+
 WITH tb_publico (
   SELECT distinct 
       '2017-06-01' as dtRef,
